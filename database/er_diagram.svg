@@ -1,0 +1,312 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 950" width="100%" height="100%">
+  <defs>
+    <style>
+      .bg { fill: #0f172a; }
+      .entity-rect { fill: #1e293b; stroke: #e11d48; stroke-width: 2.5; rx: 8; }
+      .weak-outer { fill: #1e293b; stroke: #f43f5e; stroke-width: 2.5; rx: 10; }
+      .weak-inner { fill: none; stroke: #f43f5e; stroke-width: 1.5; rx: 6; }
+      .rel-diamond { fill: #1e293b; stroke: #38bdf8; stroke-width: 2; }
+      .ident-outer { fill: #1e293b; stroke: #06b6d4; stroke-width: 2.5; }
+      .ident-inner { fill: none; stroke: #06b6d4; stroke-width: 1.5; }
+      .attr-ellipse { fill: #334155; stroke: #94a3b8; stroke-width: 1.5; }
+      .key-attr { fill: #334155; stroke: #fbbf24; stroke-width: 2; }
+      .multival-outer { fill: #334155; stroke: #a855f7; stroke-width: 2; }
+      .multival-inner { fill: none; stroke: #a855f7; stroke-width: 1.5; }
+      .derived-ellipse { fill: #334155; stroke: #34d399; stroke-width: 2; stroke-dasharray: 4,3; }
+      .composite-ellipse { fill: #334155; stroke: #cbd5e1; stroke-width: 1.5; }
+      
+      .title-text { font-family: 'Segoe UI', Inter, sans-serif; font-size: 24px; font-weight: 800; fill: #ffffff; }
+      .subtitle-text { font-family: 'Segoe UI', Inter, sans-serif; font-size: 13px; fill: #94a3b8; }
+      .entity-title { font-family: 'Segoe UI', Inter, sans-serif; font-size: 15px; font-weight: 700; fill: #fecdd3; text-anchor: middle; }
+      .rel-title { font-family: 'Segoe UI', Inter, sans-serif; font-size: 12px; font-weight: 600; fill: #bae6fd; text-anchor: middle; }
+      .attr-text { font-family: 'Segoe UI', Inter, sans-serif; font-size: 11px; fill: #f1f5f9; text-anchor: middle; }
+      .key-text { font-family: 'Segoe UI', Inter, sans-serif; font-size: 11px; font-weight: 700; fill: #fef08a; text-anchor: middle; text-decoration: underline; }
+      .card-text { font-family: 'Segoe UI', Inter, sans-serif; font-size: 13px; font-weight: 800; fill: #38bdf8; }
+      .line { stroke: #64748b; stroke-width: 1.5; }
+      .total-line-1 { stroke: #64748b; stroke-width: 3.5; }
+      .total-line-2 { stroke: #0f172a; stroke-width: 1.5; }
+      .legend-box { fill: #1e293b; stroke: #475569; stroke-width: 1.5; rx: 8; }
+      .legend-text { font-family: 'Segoe UI', Inter, sans-serif; font-size: 12px; fill: #e2e8f0; }
+    </style>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect class="bg" width="1400" height="950"/>
+
+  <!-- Header & Title -->
+  <text x="50" y="45" class="title-text">VitalRed Blood Bank Management System - Enhanced Entity-Relationship (EER) Model</text>
+  <text x="50" y="68" class="subtitle-text">Formal 3NF Compliant Model with Key, Composite, Multivalued, Derived Attributes &amp; Weak Entity Representations</text>
+
+  <!-- ==================== LEGEND BOX (TOP RIGHT) ==================== -->
+  <g transform="translate(940, 20)">
+    <rect class="legend-box" width="410" height="150"/>
+    <text x="20" y="24" class="legend-text" font-weight="bold" fill="#38bdf8">DBMS CONSTRUCTS &amp; NOTATION LEGEND</text>
+    
+    <!-- Key Attribute -->
+    <ellipse cx="40" cy="48" rx="20" ry="10" class="key-attr"/>
+    <text x="40" y="52" class="key-text" font-size="9">PK</text>
+    <text x="75" y="52" class="legend-text">Primary Key (Underlined)</text>
+
+    <!-- Weak Entity -->
+    <rect x="220" y="38" width="45" height="20" class="weak-outer"/>
+    <rect x="224" y="42" width="37" height="12" class="weak-inner"/>
+    <text x="280" y="52" class="legend-text">Weak Entity (Blood_Unit)</text>
+
+    <!-- Multivalued Attribute -->
+    <ellipse cx="40" cy="80" rx="22" ry="11" class="multival-outer"/>
+    <ellipse cx="40" cy="80" rx="17" ry="7" class="multival-inner"/>
+    <text x="75" y="84" class="legend-text">Multivalued (Donor_Phones)</text>
+
+    <!-- Identifying Relationship -->
+    <polygon points="242,70 257,80 242,90 227,80" class="ident-outer"/>
+    <polygon points="242,73 252,80 242,87 232,80" class="ident-inner"/>
+    <text x="280" y="84" class="legend-text">Identifying Rel (Yields)</text>
+
+    <!-- Derived Attribute -->
+    <ellipse cx="40" cy="112" rx="22" ry="10" class="derived-ellipse"/>
+    <text x="75" y="116" class="legend-text">Derived Attribute (Age, Expiry)</text>
+
+    <!-- Composite Attribute -->
+    <ellipse cx="242" cy="112" rx="22" ry="10" class="composite-ellipse"/>
+    <text x="280" y="116" class="legend-text">Composite (Address, Name)</text>
+
+    <!-- Participation Line -->
+    <line x1="20" y1="135" x2="60" y2="135" stroke="#64748b" stroke-width="4"/>
+    <text x="75" y="139" class="legend-text">Double Line = Total Participation | Single Line = Partial</text>
+  </g>
+
+  <!-- ==================== ENTITY: DONOR (CENTER LEFT) ==================== -->
+  <!-- Entity Box -->
+  <rect x="180" y="270" width="160" height="70" class="entity-rect"/>
+  <text x="260" y="312" class="entity-title">DONOR</text>
+
+  <!-- Attributes of DONOR -->
+  <!-- PK: donor_id -->
+  <line x1="180" y1="280" x2="90" y2="250" class="line"/>
+  <ellipse cx="70" cy="245" rx="42" ry="18" class="key-attr"/>
+  <text x="70" y="249" class="key-text">donor_id</text>
+
+  <!-- Composite: Name -> first_name, last_name -->
+  <line x1="220" y1="270" x2="160" y2="200" class="line"/>
+  <ellipse cx="150" cy="190" rx="35" ry="16" class="composite-ellipse"/>
+  <text x="150" y="194" class="attr-text">Name</text>
+  <!-- Sub attributes of Name -->
+  <line x1="130" y1="178" x2="80" y2="150" class="line"/>
+  <ellipse cx="65" cy="140" rx="36" ry="15" class="composite-ellipse"/>
+  <text x="65" y="144" class="attr-text">first_name</text>
+  <line x1="165" y1="175" x2="185" y2="140" class="line"/>
+  <ellipse cx="190" cy="130" rx="35" ry="15" class="composite-ellipse"/>
+  <text x="190" y="134" class="attr-text">last_name</text>
+
+  <!-- DOB -->
+  <line x1="260" y1="270" x2="260" y2="200" class="line"/>
+  <ellipse cx="260" cy="185" rx="30" ry="16" class="attr-ellipse"/>
+  <text x="260" y="189" class="attr-text">dob</text>
+
+  <!-- Derived: Age (derived from DOB) -->
+  <line x1="260" y1="170" x2="260" y2="130" class="line" stroke-dasharray="4,3"/>
+  <ellipse cx="260" cy="115" rx="32" ry="16" class="derived-ellipse"/>
+  <text x="260" y="119" class="attr-text" fill="#6ee7b7">Age [d]</text>
+
+  <!-- Gender -->
+  <line x1="300" y1="270" x2="350" y2="210" class="line"/>
+  <ellipse cx="360" cy="195" rx="30" ry="16" class="attr-ellipse"/>
+  <text x="360" y="199" class="attr-text">gender</text>
+
+  <!-- Multivalued: Phone_Numbers -->
+  <line x1="180" y1="320" x2="80" y2="340" class="line"/>
+  <ellipse cx="65" cy="345" rx="48" ry="20" class="multival-outer"/>
+  <ellipse cx="65" cy="345" rx="42" ry="15" class="multival-inner"/>
+  <text x="65" y="349" class="attr-text" fill="#d8b4fe">phones {m}</text>
+
+  <!-- Composite: Address -> Street, City, Pincode -->
+  <line x1="190" y1="340" x2="130" y2="400" class="line"/>
+  <ellipse cx="120" cy="410" rx="36" ry="16" class="composite-ellipse"/>
+  <text x="120" y="414" class="attr-text">Address</text>
+  <line x1="100" y1="422" x2="50" y2="445" class="line"/>
+  <ellipse cx="40" cy="455" rx="30" ry="14" class="composite-ellipse"/>
+  <text x="40" y="459" class="attr-text">street</text>
+  <line x1="120" y1="426" x2="110" y2="475" class="line"/>
+  <ellipse cx="110" cy="485" rx="28" ry="14" class="composite-ellipse"/>
+  <text x="110" y="489" class="attr-text">city</text>
+  <line x1="145" y1="422" x2="180" y2="465" class="line"/>
+  <ellipse cx="190" cy="480" rx="30" ry="14" class="composite-ellipse"/>
+  <text x="190" y="484" class="attr-text">pincode</text>
+
+  <!-- ==================== ENTITY: BLOOD_GROUP (TOP CENTER) ==================== -->
+  <rect x="580" y="270" width="160" height="70" class="entity-rect"/>
+  <text x="660" y="312" class="entity-title">BLOOD_GROUP</text>
+
+  <!-- blood_group_id PK -->
+  <line x1="620" y1="270" x2="580" y2="210" class="line"/>
+  <ellipse cx="560" cy="195" rx="48" ry="18" class="key-attr"/>
+  <text x="560" y="199" class="key-text">blood_group_id</text>
+
+  <!-- group_name -->
+  <line x1="660" y1="270" x2="660" y2="200" class="line"/>
+  <ellipse cx="660" cy="185" rx="40" ry="16" class="attr-ellipse"/>
+  <text x="660" y="189" class="attr-text">group_name</text>
+
+  <!-- critical_threshold -->
+  <line x1="700" y1="270" x2="745" y2="210" class="line"/>
+  <ellipse cx="765" cy="195" rx="48" ry="16" class="attr-ellipse"/>
+  <text x="765" y="199" class="attr-text">critical_threshold</text>
+
+  <!-- Relationship: Belongs_To (Donor - Blood_Group) -->
+  <line x1="340" y1="305" x2="425" y2="305" class="line"/>
+  <polygon points="450,285 480,305 450,325 420,305" class="rel-diamond"/>
+  <text x="450" y="309" class="rel-title">Has</text>
+  <line x1="480" y1="305" x2="580" y2="305" class="line"/>
+  <text x="350" y="298" class="card-text">N</text>
+  <text x="560" y="298" class="card-text">1</text>
+
+  <!-- ==================== ENTITY: DONATION (MIDDLE LEFT) ==================== -->
+  <rect x="180" y="520" width="160" height="70" class="entity-rect"/>
+  <text x="260" y="562" class="entity-title">DONATION</text>
+
+  <!-- donation_id PK -->
+  <line x1="180" y1="540" x2="90" y2="530" class="line"/>
+  <ellipse cx="70" cy="530" rx="45" ry="18" class="key-attr"/>
+  <text x="70" y="534" class="key-text">donation_id</text>
+
+  <!-- donation_date -->
+  <line x1="180" y1="570" x2="90" y2="600" class="line"/>
+  <ellipse cx="70" cy="605" rx="42" ry="16" class="attr-ellipse"/>
+  <text x="70" y="609" class="attr-text">donation_date</text>
+
+  <!-- hemoglobin -->
+  <line x1="210" y1="590" x2="160" y2="650" class="line"/>
+  <ellipse cx="145" cy="665" rx="42" ry="16" class="attr-ellipse"/>
+  <text x="145" y="669" class="attr-text">hemoglobin</text>
+
+  <!-- blood_pressure -->
+  <line x1="260" y1="590" x2="260" y2="660" class="line"/>
+  <ellipse cx="260" cy="675" rx="42" ry="16" class="attr-ellipse"/>
+  <text x="260" y="679" class="attr-text">blood_pressure</text>
+
+  <!-- Relationship: Donates (Donor -> Donation) -->
+  <line x1="260" y1="340" x2="260" y2="400" class="line"/>
+  <polygon points="260,400 285,425 260,450 235,425" class="rel-diamond"/>
+  <text x="260" y="429" class="rel-title">Makes</text>
+  <!-- Total participation: Donation must have a Donor -->
+  <line x1="258" y1="450" x2="258" y2="520" stroke="#64748b" stroke-width="3"/>
+  <line x1="262" y1="450" x2="262" y2="520" stroke="#64748b" stroke-width="3"/>
+  <text x="270" y="365" class="card-text">1</text>
+  <text x="270" y="505" class="card-text">N</text>
+
+  <!-- ==================== WEAK ENTITY: BLOOD_UNIT (BOTTOM LEFT) ==================== -->
+  <rect x="175" y="775" width="170" height="75" class="weak-outer"/>
+  <rect x="180" y="780" width="160" height="65" class="weak-inner"/>
+  <text x="260" y="822" class="entity-title">BLOOD_UNIT</text>
+  <text x="260" y="836" class="attr-text" fill="#f43f5e">(Weak Entity)</text>
+
+  <!-- unit_barcode Partial / Discriminator Key -->
+  <line x1="175" y1="800" x2="80" y2="780" class="line"/>
+  <ellipse cx="65" cy="775" rx="46" ry="18" class="key-attr"/>
+  <text x="65" y="779" class="key-text" style="stroke-dasharray: 2,2;">unit_barcode</text>
+
+  <!-- storage_rack -->
+  <line x1="175" y1="830" x2="80" y2="840" class="line"/>
+  <ellipse cx="65" cy="845" rx="42" ry="16" class="attr-ellipse"/>
+  <text x="65" y="849" class="attr-text">storage_rack</text>
+
+  <!-- Derived: days_to_expiry -->
+  <line x1="260" y1="850" x2="260" y2="900" class="line" stroke-dasharray="4,3"/>
+  <ellipse cx="260" cy="915" rx="55" ry="16" class="derived-ellipse"/>
+  <text x="260" y="919" class="attr-text" fill="#6ee7b7">days_to_expiry [d]</text>
+
+  <!-- Identifying Relationship: Yields (Donation identifies Blood_Unit) -->
+  <line x1="260" y1="590" x2="260" y2="650" class="line"/>
+  <polygon points="260,650 288,675 260,700 232,675" class="ident-outer"/>
+  <polygon points="260,654 282,675 260,696 238,675" class="ident-inner"/>
+  <text x="260" y="679" class="rel-title" fill="#67e8f9">Yields</text>
+  <line x1="258" y1="700" x2="258" y2="775" stroke="#64748b" stroke-width="3"/>
+  <line x1="262" y1="700" x2="262" y2="775" stroke="#64748b" stroke-width="3"/>
+  <text x="270" y="615" class="card-text">1</text>
+  <text x="270" y="760" class="card-text">1..N</text>
+
+  <!-- ==================== ENTITY: RECIPIENT / PATIENT (CENTER RIGHT) ==================== -->
+  <rect x="950" y="270" width="160" height="70" class="entity-rect"/>
+  <text x="1030" y="312" class="entity-title">RECIPIENT</text>
+
+  <!-- recipient_id PK -->
+  <line x1="1070" y1="270" x2="1140" y2="210" class="line"/>
+  <ellipse cx="1160" cy="195" rx="46" ry="18" class="key-attr"/>
+  <text x="1160" y="199" class="key-text">recipient_id</text>
+
+  <!-- patient_name -->
+  <line x1="1030" y1="270" x2="1030" y2="200" class="line"/>
+  <ellipse cx="1030" cy="185" rx="44" ry="16" class="attr-ellipse"/>
+  <text x="1030" y="189" class="attr-text">patient_name</text>
+
+  <!-- ==================== ENTITY: HOSPITAL (FAR RIGHT) ==================== -->
+  <rect x="950" y="520" width="160" height="70" class="entity-rect"/>
+  <text x="1030" y="562" class="entity-title">HOSPITAL</text>
+
+  <!-- hospital_id PK -->
+  <line x1="1110" y1="540" x2="1190" y2="520" class="line"/>
+  <ellipse cx="1215" cy="515" rx="45" ry="18" class="key-attr"/>
+  <text x="1215" y="519" class="key-text">hospital_id</text>
+
+  <!-- license_no -->
+  <line x1="1110" y1="570" x2="1190" y2="585" class="line"/>
+  <ellipse cx="1215" cy="590" rx="40" ry="16" class="attr-ellipse"/>
+  <text x="1215" y="594" class="attr-text">license_no</text>
+
+  <!-- ==================== ENTITY: BLOOD_REQUEST (CENTER BOTTOM) ==================== -->
+  <rect x="580" y="650" width="160" height="70" class="entity-rect"/>
+  <text x="660" y="692" class="entity-title">BLOOD_REQUEST</text>
+
+  <!-- request_id PK -->
+  <line x1="620" y1="720" x2="570" y2="780" class="line"/>
+  <ellipse cx="555" cy="795" rx="45" ry="18" class="key-attr"/>
+  <text x="555" y="799" class="key-text">request_id</text>
+
+  <!-- urgency -->
+  <line x1="660" y1="720" x2="660" y2="785" class="line"/>
+  <ellipse cx="660" cy="800" rx="35" ry="16" class="attr-ellipse"/>
+  <text x="660" y="804" class="attr-text">urgency</text>
+
+  <!-- units_needed -->
+  <line x1="700" y1="720" x2="750" y2="780" class="line"/>
+  <ellipse cx="765" cy="795" rx="42" ry="16" class="attr-ellipse"/>
+  <text x="765" y="799" class="attr-text">units_needed</text>
+
+  <!-- Relationship: Files (Recipient -> Blood_Request) -->
+  <line x1="970" y1="340" x2="850" y2="450" class="line"/>
+  <polygon points="850,450 875,475 850,500 825,475" class="rel-diamond"/>
+  <text x="850" y="479" class="rel-title">Files</text>
+  <line x1="825" y1="475" x2="710" y2="650" class="line"/>
+  <text x="960" y="370" class="card-text">1</text>
+  <text x="730" y="630" class="card-text">N</text>
+
+  <!-- Relationship: Located_At (Recipient -> Hospital) -->
+  <line x1="1030" y1="340" x2="1030" y2="400" class="line"/>
+  <polygon points="1030,400 1055,425 1030,450 1005,425" class="rel-diamond"/>
+  <text x="1030" y="429" class="rel-title">Admitted_At</text>
+  <line x1="1030" y1="450" x2="1030" y2="520" class="line"/>
+  <text x="1040" y="365" class="card-text">N</text>
+  <text x="1040" y="505" class="card-text">1</text>
+
+  <!-- Relationship: Fulfills / Allocated (Blood_Unit -> Blood_Request) -->
+  <line x1="345" y1="812" x2="450" y2="812" class="line"/>
+  <polygon points="480,792 510,812 480,832 450,812" class="rel-diamond"/>
+  <text x="480" y="816" class="rel-title">Allocated</text>
+  <line x1="510" y1="812" x2="610" y2="720" class="line"/>
+  <text x="360" y="805" class="card-text">0..1</text>
+  <text x="590" y="740" class="card-text">1</text>
+
+  <!-- ==================== ENTITY: USER / STAFF (AUTH & APPROVAL) ==================== -->
+  <rect x="580" y="460" width="160" height="65" class="entity-rect"/>
+  <text x="660" y="498" class="entity-title">USER / STAFF</text>
+  <text x="660" y="512" class="attr-text" fill="#94a3b8">(Admin, Donor, Req)</text>
+
+  <!-- Relationship: Approves (Staff -> Blood_Request) -->
+  <line x1="660" y1="525" x2="660" y2="570" class="line"/>
+  <polygon points="660,570 685,595 660,620 635,595" class="rel-diamond"/>
+  <text x="660" y="599" class="rel-title">Reviews</text>
+  <line x1="660" y1="620" x2="660" y2="650" class="line"/>
+  <text x="670" y="545" class="card-text">1</text>
+  <text x="670" y="640" class="card-text">N</text>
+
+</svg>

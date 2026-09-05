@@ -1,0 +1,3 @@
+@echo off
+echo Opening VitalRed Blood Bank Management System in your browser...
+start http://localhost/VitalRed/

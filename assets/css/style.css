@@ -1,0 +1,386 @@
+/* ==========================================================================
+   VitalRed - HealthTech & Blood Bank Management System Stylesheet
+   Modern, Clean, High-Contrast Medical Grade UI
+   ========================================================================== */
+
+:root {
+    --primary-red: #dc2626;
+    --primary-red-hover: #b91c1c;
+    --primary-red-dark: #991b1b;
+    --primary-red-light: #fee2e2;
+    --primary-red-ultra-light: #fff1f2;
+    --accent-emerald: #059669;
+    --accent-blue: #2563eb;
+    --accent-purple: #7c3aed;
+    --dark-slate: #0f172a;
+    --card-slate: #1e293b;
+    --border-color: #e2e8f0;
+    --body-bg: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--body-bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Navbar */
+.navbar-vitalred {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    padding: 0.75rem 0;
+}
+
+.navbar-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--primary-red) !important;
+}
+
+.brand-icon-drop {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #ef4444, #991b1b);
+    border-radius: 50% 50% 50% 4px;
+    transform: rotate(45deg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+}
+
+.brand-icon-drop i {
+    transform: rotate(-45deg);
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    font-size: 0.92rem;
+    color: #475569;
+    padding: 0.5rem 0.9rem !important;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-red) !important;
+    background-color: var(--primary-red-ultra-light);
+}
+
+/* Hero Section */
+.hero-banner {
+    background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);
+    color: #ffffff;
+    padding: 5rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+/* Cards & Widgets */
+.vr-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    overflow: hidden;
+}
+
+.vr-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.vr-card-hover:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-widget {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-icon-wrapper {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.stat-number {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--dark-slate);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* Blood Group Cards in Stock Matrix */
+.blood-stock-card {
+    background: #ffffff;
+    border: 2px solid #f1f5f9;
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.blood-stock-card:hover {
+    border-color: var(--primary-red);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.blood-type-badge {
+    display: inline-block;
+    width: 58px;
+    height: 58px;
+    line-height: 58px;
+    border-radius: 50%;
+    font-size: 1.45rem;
+    font-weight: 800;
+    background: var(--primary-red-ultra-light);
+    color: var(--primary-red);
+    margin-bottom: 0.6rem;
+    border: 2px solid var(--primary-red-light);
+}
+
+.blood-stock-card.critical {
+    border-color: #fca5a5;
+    background-color: #fff1f2;
+}
+
+.blood-stock-card.critical .blood-type-badge {
+    background: #e11d48;
+    color: #ffffff;
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(225, 29, 72, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); }
+}
+
+/* Custom Buttons */
+.btn-vitalred {
+    background-color: var(--primary-red);
+    color: #ffffff;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    padding: 0.65rem 1.35rem;
+    box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
+    transition: all 0.2s ease;
+}
+
+.btn-vitalred:hover, .btn-vitalred:focus {
+    background-color: var(--primary-red-hover);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-vitalred-outline {
+    background-color: transparent;
+    color: var(--primary-red);
+    border: 2px solid var(--primary-red);
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 0.6rem 1.3rem;
+    transition: all 0.2s ease;
+}
+
+.btn-vitalred-outline:hover {
+    background-color: var(--primary-red);
+    color: #ffffff;
+}
+
+/* Official Google Sign-In Button Styling */
+.btn-google-official {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: #ffffff;
+    color: #3c4043;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-family: 'Google Sans', Roboto, 'Segoe UI', Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(60,64,67, 0.08);
+    transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+    width: 100%;
+    text-decoration: none;
+}
+
+.btn-google-official:hover {
+    background-color: #f8fafd;
+    border-color: #c2e7ff;
+    box-shadow: 0 2px 6px rgba(60,64,67, 0.15);
+    color: #1f1f1f;
+}
+
+.btn-google-official svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/* Login Split Screen Form */
+.auth-container {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+}
+
+.auth-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    max-width: 960px;
+    width: 100%;
+}
+
+.auth-sidebar {
+    background: linear-gradient(135deg, #881337 0%, #991b1b 50%, #dc2626 100%);
+    color: #ffffff;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.auth-sidebar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Quick Demo Login Badges */
+.demo-pill {
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 8px 12px;
+    border: 1px dashed #cbd5e1;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.demo-pill:hover {
+    background-color: #f1f5f9;
+    border-color: var(--primary-red);
+    transform: translateY(-1px);
+}
+
+/* Request Urgency Tags */
+.urgency-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin: 2rem 0;
+}
+
+.urgency-stepper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: #e2e8f0;
+    z-index: 1;
+}
+
+.step-node {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.step-node.completed {
+    background: #10b981;
+    border-color: #10b981;
+    color: #ffffff;
+}
+
+.step-node.active {
+    background: var(--primary-red);
+    border-color: var(--primary-red);
+    color: #ffffff;
+    box-shadow: 0 0 0 6px var(--primary-red-light);
+}
+
+/* Footer */
+footer {
+    background-color: #ffffff;
+    border-top: 1px solid var(--border-color);
+    padding: 2rem 0;
+    margin-top: auto;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}

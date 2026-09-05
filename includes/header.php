@@ -63,7 +63,7 @@ $req_uri = $_SERVER['REQUEST_URI'] ?? '';
                 
                 <!-- 1. Admin/Staff Menu Item -->
                 <li class="nav-item">
-                    <a class="nav-link <?= strpos($req_uri, 'admin/index') !== false ? 'active fw-bold' : '' ?>" 
+                    <a class="nav-link text-nowrap <?= strpos($req_uri, 'admin/index') !== false ? 'active fw-bold' : '' ?>" 
                        href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/index.php' : 'login.php' ?>">
                         <i class="fa-solid fa-user-shield me-1 text-danger"></i> Admin/Staff
                     </a>
@@ -71,7 +71,7 @@ $req_uri = $_SERVER['REQUEST_URI'] ?? '';
 
                 <!-- 2. Donor Menu Item -->
                 <li class="nav-item">
-                    <a class="nav-link <?= (strpos($req_uri, 'donor') !== false && strpos($req_uri, 'donations') === false) ? 'active fw-bold' : '' ?>" 
+                    <a class="nav-link text-nowrap <?= (strpos($req_uri, 'donor') !== false && strpos($req_uri, 'donations') === false) ? 'active fw-bold' : '' ?>" 
                        href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/donors.php' : ($role === 'donor' ? 'donor/index.php' : 'register.php?role=donor') ?>">
                         <i class="fa-solid fa-hand-holding-heart me-1 text-success"></i> Donor
                     </a>
@@ -79,23 +79,44 @@ $req_uri = $_SERVER['REQUEST_URI'] ?? '';
 
                 <!-- 3. Requester Menu Item -->
                 <li class="nav-item">
-                    <a class="nav-link <?= strpos($req_uri, 'request') !== false ? 'active fw-bold' : '' ?>" 
+                    <a class="nav-link text-nowrap <?= strpos($req_uri, 'request') !== false ? 'active fw-bold' : '' ?>" 
                        href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/requests.php' : ($role === 'requester' ? 'requester/index.php' : 'requester/new_request.php') ?>">
                         <i class="fa-solid fa-hospital-user me-1 text-primary"></i> Requester
                     </a>
                 </li>
 
-                <!-- 4. BloodGroup Menu Item -->
-                <li class="nav-item">
-                    <a class="nav-link <?= strpos($req_uri, 'blood_groups') !== false ? 'active fw-bold' : '' ?>" 
-                       href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/blood_groups.php' : 'index.php#stock-section' ?>">
+                <!-- 4. BloodGroup Menu Item with Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-nowrap <?= strpos($req_uri, 'blood_groups') !== false ? 'active fw-bold' : '' ?>" 
+                       href="#" id="navbarBloodGroupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-droplet me-1 text-danger"></i> BloodGroup
                     </a>
+                    <ul class="dropdown-menu shadow-sm border-0 py-2" aria-labelledby="navbarBloodGroupDropdown" style="min-width: 220px;">
+                        <li>
+                            <a class="dropdown-item fw-semibold text-danger" href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/blood_groups.php' : 'index.php#stock-section' ?>">
+                                <i class="fa-solid fa-layer-group me-2"></i> All Blood Groups &amp; Inventory
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><h6 class="dropdown-header text-uppercase small text-muted">Filter by Group:</h6></li>
+                        <li>
+                            <div class="px-3 py-1 d-flex flex-wrap gap-1">
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">A+</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">A-</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">B+</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">B-</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">AB+</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">AB-</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">O+</a>
+                                <a href="<?= BASE_URL ?>index.php#stock-section" class="badge bg-danger-subtle text-danger border border-danger-subtle text-decoration-none px-2 py-1">O-</a>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
 
                 <!-- 5. BloodUnit Menu Item -->
                 <li class="nav-item">
-                    <a class="nav-link <?= strpos($req_uri, 'stock') !== false ? 'active fw-bold' : '' ?>" 
+                    <a class="nav-link text-nowrap <?= strpos($req_uri, 'stock') !== false ? 'active fw-bold' : '' ?>" 
                        href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/stock.php' : 'index.php#stock-section' ?>">
                         <i class="fa-solid fa-cubes-stacked me-1 text-warning"></i> BloodUnit
                     </a>
@@ -103,7 +124,7 @@ $req_uri = $_SERVER['REQUEST_URI'] ?? '';
 
                 <!-- 6. Donation Menu Item -->
                 <li class="nav-item">
-                    <a class="nav-link <?= strpos($req_uri, 'donations') !== false || strpos($req_uri, 'schedule') !== false ? 'active fw-bold' : '' ?>" 
+                    <a class="nav-link text-nowrap <?= strpos($req_uri, 'donations') !== false || strpos($req_uri, 'schedule') !== false ? 'active fw-bold' : '' ?>" 
                        href="<?= BASE_URL ?><?= $role === 'admin' ? 'admin/donations.php' : ($role === 'donor' ? 'donor/history.php' : 'donor/schedule.php') ?>">
                         <i class="fa-solid fa-heart-pulse me-1 text-danger"></i> Donation
                     </a>

@@ -12,8 +12,25 @@ if (is_logged_in()) {
 }
 
 $error = '';
-$blood_groups = $pdo->query("SELECT * FROM blood_groups ORDER BY group_name ASC")->fetchAll();
-$hospitals = $pdo->query("SELECT * FROM hospitals WHERE is_active = 1 ORDER BY name ASC")->fetchAll();
+try {
+    $blood_groups = $pdo->query("SELECT * FROM blood_groups ORDER BY group_name ASC")->fetchAll();
+    $hospitals = $pdo->query("SELECT * FROM hospitals WHERE is_active = 1 ORDER BY name ASC")->fetchAll();
+} catch (Exception $e) {
+    $blood_groups = [];
+    $hospitals = [];
+}
+if (empty($blood_groups)) {
+    $blood_groups = [
+        ['blood_group_id' => 1, 'group_name' => 'A+', 'rh_factor' => 'Positive'],
+        ['blood_group_id' => 2, 'group_name' => 'A-', 'rh_factor' => 'Negative'],
+        ['blood_group_id' => 3, 'group_name' => 'B+', 'rh_factor' => 'Positive'],
+        ['blood_group_id' => 4, 'group_name' => 'B-', 'rh_factor' => 'Negative'],
+        ['blood_group_id' => 5, 'group_name' => 'AB+', 'rh_factor' => 'Positive'],
+        ['blood_group_id' => 6, 'group_name' => 'AB-', 'rh_factor' => 'Negative'],
+        ['blood_group_id' => 7, 'group_name' => 'O+', 'rh_factor' => 'Positive'],
+        ['blood_group_id' => 8, 'group_name' => 'O-', 'rh_factor' => 'Negative'],
+    ];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['csrf_token'] ?? '';

@@ -9,37 +9,27 @@
 -- Requester:  req123 / hospital123
 -- ============================================================================
 
--- Clear previous data in reverse dependency order
-SET FOREIGN_KEY_CHECKS = 0;
-TRUNCATE TABLE blood_units;
-TRUNCATE TABLE blood_requests;
-TRUNCATE TABLE donations;
-TRUNCATE TABLE recipients;
-TRUNCATE TABLE donor_phones;
-TRUNCATE TABLE donors;
-TRUNCATE TABLE hospitals;
-TRUNCATE TABLE blood_groups;
-TRUNCATE TABLE users;
-SET FOREIGN_KEY_CHECKS = 1;
+-- Safe Seed Script: Does not truncate or wipe existing user-entered data.
+-- Uses INSERT IGNORE to ensure non-destructive seeding.
 
 -- ----------------------------------------------------------------------------
 -- 1. Blood Groups Master (All 8 ABO/Rh Types)
 -- ----------------------------------------------------------------------------
-INSERT INTO blood_groups (blood_group_id, group_name, rh_factor, critical_threshold, description) VALUES
-(1, 'A+',  'Positive', 6, 'Can give to A+, AB+; Can receive from A+, A-, O+, O-'),
-(2, 'A-',  'Negative', 3, 'Can give to A-, A+, AB-, AB+; Can receive from A-, O-'),
-(3, 'B+',  'Positive', 6, 'Can give to B+, AB+; Can receive from B+, B-, O+, O-'),
-(4, 'B-',  'Negative', 3, 'Can give to B-, B+, AB-, AB+; Can receive from B-, O-'),
-(5, 'AB+', 'Positive', 4, 'Universal plasma donor; Can receive all red cell types (Universal Recipient)'),
-(6, 'AB-', 'Negative', 2, 'Rarest blood group; Can receive from A-, B-, AB-, O-'),
-(7, 'O+',  'Positive', 8, 'Most common blood group; Can give to O+, A+, B+, AB+; Can receive from O+, O-'),
-(8, 'O-',  'Negative', 4, 'Universal red cell donor; Essential for emergency transfusions');
+INSERT IGNORE INTO blood_groups (blood_group_id, group_name, rh_factor, critical_threshold, description) VALUES
+(1, 'A+',  'Positive', 6, 'Can give to A+, AB+, Can receive from A+, A-, O+, O-'),
+(2, 'A-',  'Negative', 3, 'Can give to A-, A+, AB-, AB+, Can receive from A-, O-'),
+(3, 'B+',  'Positive', 6, 'Can give to B+, AB+, Can receive from B+, B-, O+, O-'),
+(4, 'B-',  'Negative', 3, 'Can give to B-, B+, AB-, AB+, Can receive from B-, O-'),
+(5, 'AB+', 'Positive', 4, 'Universal plasma donor, Can receive all red cell types (Universal Recipient)'),
+(6, 'AB-', 'Negative', 2, 'Rarest blood group, Can receive from A-, B-, AB-, O-'),
+(7, 'O+',  'Positive', 8, 'Most common blood group, Can give to O+, A+, B+, AB+, Can receive from O+, O-'),
+(8, 'O-',  'Negative', 4, 'Universal red cell donor, Essential for emergency transfusions');
 
 -- ----------------------------------------------------------------------------
 -- 2. Users (Authentication System)
 -- Password Hash works with bcrypt or fallback demo logins (admin123, donor123, req123)
 -- ----------------------------------------------------------------------------
-INSERT INTO users (user_id, full_name, email, password_hash, phone, role, status) VALUES
+INSERT IGNORE INTO users (user_id, full_name, email, password_hash, phone, role, status) VALUES
 -- Admin / Medical Staff (admin123 / staff123)
 (1, 'Dr. Rajesh Verma (Admin & CMO)', 'admin@vitalred.org', '$2y$10$YSHpCYyPxsalN9kY5AQbYuQnWiryUI6i/0kAL/uHfWMXfPERh5C.2', '+91 98100 12345', 'admin', 'active'),
 (2, 'Priya Nair (Blood Bank Officer)', 'staff.priya@vitalred.org', '$2y$10$qsNgPTXKlTN0bh85sBN42.3DI.wdiNSa6BUlyjHROf3slFCJbeFQ6', '+91 98111 23456', 'admin', 'active'),
@@ -72,7 +62,7 @@ INSERT INTO users (user_id, full_name, email, password_hash, phone, role, status
 -- 3. 10 Hospitals (Covering All Major Hospitals in Kosi Division: Saharsa, Madhepura, Supaul)
 -- With Contact Person as Authorized Doctors / Medical Officers
 -- ----------------------------------------------------------------------------
-INSERT INTO hospitals (hospital_id, name, license_no, address, city, state, pincode, phone, email, contact_person) VALUES
+INSERT IGNORE INTO hospitals (hospital_id, name, license_no, address, city, state, pincode, phone, email, contact_person) VALUES
 (1,  'Lord Buddha Koshi Medical College & Hospital (LBKMCH)',        'LIC-LBKMCH-2018-01', 'NH-107, Baijnathpur',                  'Saharsa',             'Bihar', '852201', '+91 6478 224500', 'bloodbank@lbkmch.edu.in',        'Dr. Amit Kumar Jha'),
 (2,  'Sadar Hospital Saharsa',                                       'LIC-SH-SAH-2015-02', 'Hospital Road, Near Collectorate',     'Saharsa',             'Bihar', '852201', '+91 6478 223101', 'sadar.saharsa@biharhealth.gov.in', 'Dr. Rajesh Verma'),
 (3,  'Sub-Divisional Hospital (SDH) Simri Bakhtiyarpur',             'LIC-SDH-SB-2019-03', 'Station Road, Simri Bakhtiyarpur',     'Simri Bakhtiyarpur',  'Bihar', '852127', '+91 6478 238202', 'sdh.simri@biharhealth.gov.in',    'Dr. Anand Vardhan'),
@@ -87,7 +77,7 @@ INSERT INTO hospitals (hospital_id, name, license_no, address, city, state, pinc
 -- ----------------------------------------------------------------------------
 -- 4. 15 Donors (With Kosi Division Cities & Blood Types)
 -- ----------------------------------------------------------------------------
-INSERT INTO donors (donor_id, user_id, first_name, last_name, dob, gender, blood_group_id, address_street, city, state, pincode, emergency_contact, last_donation_date) VALUES
+INSERT IGNORE INTO donors (donor_id, user_id, first_name, last_name, dob, gender, blood_group_id, address_street, city, state, pincode, emergency_contact, last_donation_date) VALUES
 (1,  3,  'Rahul',   'Sharma', '1995-04-12', 'Male',   7, 'Ward No. 12, D.B. Road',          'Saharsa',            'Bihar', '852201', '+91 98111 99999', '2026-05-15'),
 (2,  4,  'Ananya',  'Verma',  '1998-09-24', 'Female', 1, 'College Chowk, Professor Colony', 'Madhepura',           'Bihar', '852113', '+91 98222 88888', '2026-07-20'),
 (3,  5,  'Vikram',  'Singh',  '1992-11-03', 'Male',   3, 'Cinema Road, Supaul Bazaar',      'Supaul',             'Bihar', '852131', '+91 98333 77777', '2026-03-10'),
@@ -107,7 +97,7 @@ INSERT INTO donors (donor_id, user_id, first_name, last_name, dob, gender, blood
 -- ----------------------------------------------------------------------------
 -- 5. Multivalued Phone Numbers (donor_phones)
 -- ----------------------------------------------------------------------------
-INSERT INTO donor_phones (donor_id, phone_number, phone_type) VALUES
+INSERT IGNORE INTO donor_phones (donor_id, phone_number, phone_type) VALUES
 (1,  '+91 98765 43210', 'Primary'),
 (1,  '+91 98111 00001', 'Alternate'),
 (2,  '+91 98222 34567', 'Primary'),
@@ -129,7 +119,7 @@ INSERT INTO donor_phones (donor_id, phone_number, phone_type) VALUES
 -- ----------------------------------------------------------------------------
 -- 6. 5 Requesters & Patients (Associated with Kosi Division Hospitals)
 -- ----------------------------------------------------------------------------
-INSERT INTO recipients (recipient_id, user_id, hospital_id, patient_name, dob, gender, blood_group_id, contact_phone, medical_record_no) VALUES
+INSERT IGNORE INTO recipients (recipient_id, user_id, hospital_id, patient_name, dob, gender, blood_group_id, contact_phone, medical_record_no) VALUES
 (1, 18, 1, 'Ramesh Das',      '1978-03-14', 'Male',   7, '+91 98777 78901', 'MRN-LBKMCH-88219'),
 (2, 19, 2, 'Sunita Devi',     '1985-07-28', 'Female', 3, '+91 98888 89012', 'MRN-SAH-SADAR-44012'),
 (3, 20, 5, 'Manoj Yadav',     '1991-10-05', 'Male',   1, '+91 98999 90123', 'MRN-JNKTMCH-99120'),
@@ -139,7 +129,7 @@ INSERT INTO recipients (recipient_id, user_id, hospital_id, patient_name, dob, g
 -- ----------------------------------------------------------------------------
 -- 7. Donations (Transfusion Collection Events)
 -- ----------------------------------------------------------------------------
-INSERT INTO donations (donation_id, donor_id, blood_group_id, donation_date, units_collected, hemoglobin_g_dl, blood_pressure, donation_type, staff_id, remarks) VALUES
+INSERT IGNORE INTO donations (donation_id, donor_id, blood_group_id, donation_date, units_collected, hemoglobin_g_dl, blood_pressure, donation_type, staff_id, remarks) VALUES
 (1,  1,  7, '2026-05-15', 1, 14.5, '120/80', 'Whole Blood', 1, 'Camp at Sadar Hospital Saharsa - Dr. Rajesh Verma'),
 (2,  2,  1, '2026-07-20', 1, 13.2, '118/78', 'Whole Blood', 2, 'Voluntary drive at JNKTMCH Madhepura - Dr. Priya Ranjan'),
 (3,  3,  3, '2026-03-10', 1, 15.0, '122/82', 'Whole Blood', 1, 'Blood bank donation at Sadar Hospital Supaul - Dr. Sunil Kumar Yadav'),
@@ -159,7 +149,7 @@ INSERT INTO donations (donation_id, donor_id, blood_group_id, donation_date, uni
 -- ----------------------------------------------------------------------------
 -- 8. Blood Units (Inventory Weak Entity tied to Transfusion events)
 -- ----------------------------------------------------------------------------
-INSERT INTO blood_units (unit_id, unit_barcode, donation_id, blood_group_id, collection_date, expiry_date, storage_rack, status, issued_request_id) VALUES
+INSERT IGNORE INTO blood_units (unit_id, unit_barcode, donation_id, blood_group_id, collection_date, expiry_date, storage_rack, status, issued_request_id) VALUES
 -- O+ Units (Blood Group 7)
 (1,  'UNIT-OPOS-20260815-01', 1,  7, '2026-08-15', '2026-09-26', 'RACK-A1', 'available', NULL),
 (2,  'UNIT-OPOS-20260818-02', 9,  7, '2026-08-10', '2026-09-21', 'RACK-A1', 'available', NULL),
@@ -198,7 +188,7 @@ INSERT INTO blood_units (unit_id, unit_barcode, donation_id, blood_group_id, col
 -- ----------------------------------------------------------------------------
 -- 9. 5 Blood Requests (Prescribed by Respective Doctors in Kosi Division)
 -- ----------------------------------------------------------------------------
-INSERT INTO blood_requests (request_id, recipient_id, hospital_id, blood_group_id, units_needed, urgency, reason, doctor_name, status, approved_by, approval_notes, approved_at, issued_at, created_at) VALUES
+INSERT IGNORE INTO blood_requests (request_id, recipient_id, hospital_id, blood_group_id, units_needed, urgency, reason, doctor_name, status, approved_by, approval_notes, approved_at, issued_at, created_at) VALUES
 (1, 1, 1, 7, 2, 'Emergency', 'Acute blood loss in road traffic trauma accident near Baijnathpur', 'Dr. Amit Kumar Jha',    'approved', 1, 'Emergency verified. Cross-match approved.', '2026-09-05 10:15:00', NULL, '2026-09-05 09:30:00'),
 (2, 2, 2, 3, 1, 'Urgent',    'Severe anemia with acute heart failure symptoms',                 'Dr. Rajesh Verma',       'pending',  NULL, NULL, NULL, NULL, '2026-09-05 11:20:00'),
 (3, 3, 5, 1, 1, 'Normal',    'Elective orthopedic knee replacement surgery',                     'Dr. Priya Ranjan',       'pending',  NULL, NULL, NULL, NULL, '2026-09-05 14:00:00'),

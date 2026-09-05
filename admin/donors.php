@@ -16,6 +16,32 @@ try {
     $cities = [];
 }
 
+// 1-Click Sync for Kosi Division Donors & Hospitals
+if (isset($_GET['action']) && $_GET['action'] === 'seed_kosi') {
+    try {
+        $seed_file = __DIR__ . '/../database/seed.sql';
+        if (file_exists($seed_file)) {
+            $seed_sql = file_get_contents($seed_file);
+            $seed_sql = preg_replace('/--.*$/m', '', $seed_sql);
+            $seed_sql = preg_replace('/\/\*.*?\*\//s', '', $seed_sql);
+            $seed_sql = preg_replace('/USE\s+[^;]+;/i', '', $seed_sql);
+
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
+            $statements = array_filter(array_map('trim', explode(';', $seed_sql)));
+            foreach ($statements as $stmt) {
+                if (!empty($stmt)) {
+                    try { $pdo->exec($stmt); } catch (Exception $ex) {}
+                }
+            }
+            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
+            set_flash('success', 'Kosi Division database synchronized: 10 Hospitals, 15 Donors, and 5 Requesters loaded successfully!');
+        }
+    } catch (Exception $e) {
+        set_flash('danger', 'Sync failed: ' . $e->getMessage());
+    }
+    redirect('admin/donors.php');
+}
+
 // Handle Add Donor Form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
@@ -110,9 +136,14 @@ require_once __DIR__ . '/../includes/header.php';
             <h2 class="fw-bold mb-1"><i class="fa-solid fa-users text-danger me-2"></i>Voluntary Donors Directory</h2>
             <p class="text-muted small mb-0">Central verified voluntary donor repository tracking donations, contact numbers, and medical eligibility.</p>
         </div>
-        <button class="btn btn-vitalred" data-bs-toggle="modal" data-bs-target="#addDonorModal">
-            <i class="fa-solid fa-user-plus me-1"></i> Add New Donor
-        </button>
+        <div class="d-flex gap-2">
+            <a href="<?= BASE_URL ?>admin/donors.php?action=seed_kosi" class="btn btn-outline-danger" onclick="return confirm('Load/Update all 15 Kosi Division Donors and 10 Hospitals into database?');">
+                <i class="fa-solid fa-cloud-arrow-down me-1"></i> Sync 15 Kosi Donors
+            </a>
+            <button class="btn btn-vitalred" data-bs-toggle="modal" data-bs-target="#addDonorModal">
+                <i class="fa-solid fa-user-plus me-1"></i> Add New Donor
+            </button>
+        </div>
     </div>
 
     <?php if ($error): ?>

@@ -69,9 +69,6 @@ try {
     }
 
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-
-    // Auto-seed Kosi Division data if database has less than 15 donors
-    ensure_kosi_database_ready($pdo);
 } catch (PDOException $e) {
     die("<div style='font-family:sans-serif;padding:30px;background:#fee2e2;color:#991b1b;border-radius:8px;max-width:600px;margin:50px auto;border:1px solid #f87171;'>
         <h2>Database Connection Error</h2>
@@ -80,60 +77,6 @@ try {
         <hr style='border:0;border-top:1px solid #fca5a5;'>
         <p>If running locally, make sure MySQL is running in XAMPP. If on Render, please configure the database environment variables in your Render dashboard.</p>
     </div>");
-}
-
-/**
- * Automatically ensures full schema and 15 Kosi donors, 10 hospitals are present
- */
-function ensure_kosi_database_ready($pdo) {
-    if (!$pdo) return;
-    try {
-        $count = $pdo->query("SELECT COUNT(*) FROM donors")->fetchColumn();
-    } catch (Exception $e) {
-        $count = 0;
-    }
-
-    if ($count < 15) {
-        // 1. Ensure Schema
-        $schema_file = __DIR__ . '/../database/schema.sql';
-        if (file_exists($schema_file)) {
-            $schema_sql = file_get_contents($schema_file);
-            $schema_sql = preg_replace('/--.*$/m', '', $schema_sql);
-            $schema_sql = preg_replace('/\/\*.*?\*\//s', '', $schema_sql);
-            $schema_sql = preg_replace('/DELIMITER\s+[\/\$;]+.*?DELIMITER\s+;/is', '', $schema_sql);
-            $schema_sql = preg_replace('/CREATE\s+TRIGGER\b.*?END\s*(;|\/\/)/is', '', $schema_sql);
-            $schema_sql = preg_replace('/DROP\s+DATABASE\s+IF\s+EXISTS\s+[^;]+;/i', '', $schema_sql);
-            $schema_sql = preg_replace('/CREATE\s+DATABASE\s+[^;]+;/i', '', $schema_sql);
-            $schema_sql = preg_replace('/USE\s+[^;]+;/i', '', $schema_sql);
-
-            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
-            $statements = array_filter(array_map('trim', explode(';', $schema_sql)));
-            foreach ($statements as $stmt) {
-                if (!empty($stmt)) {
-                    try { $pdo->exec($stmt); } catch (Exception $ex) {}
-                }
-            }
-            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
-        }
-
-        // 2. Ensure Seed Data (10 Kosi Hospitals, 15 Donors, 5 Requesters)
-        $seed_file = __DIR__ . '/../database/seed.sql';
-        if (file_exists($seed_file)) {
-            $seed_sql = file_get_contents($seed_file);
-            $seed_sql = preg_replace('/--.*$/m', '', $seed_sql);
-            $seed_sql = preg_replace('/\/\*.*?\*\//s', '', $seed_sql);
-            $seed_sql = preg_replace('/USE\s+[^;]+;/i', '', $seed_sql);
-
-            $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
-            $statements = array_filter(array_map('trim', explode(';', $seed_sql)));
-            foreach ($statements as $stmt) {
-                if (!empty($stmt)) {
-                    try { $pdo->exec($stmt); } catch (Exception $ex) {}
-                }
-            }
-            $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
-        }
-    }
 }
 
 /**

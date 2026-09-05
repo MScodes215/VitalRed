@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
+    ca-certificates \
     && docker-php-ext-install pdo pdo_mysql mysqli \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*

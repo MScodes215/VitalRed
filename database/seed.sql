@@ -40,33 +40,33 @@ INSERT INTO blood_groups (blood_group_id, group_name, rh_factor, critical_thresh
 -- Password Hash works with bcrypt or fallback demo logins (admin123, donor123, req123)
 -- ----------------------------------------------------------------------------
 INSERT INTO users (user_id, full_name, email, password_hash, phone, role, status) VALUES
--- Admin / Medical Staff
-(1, 'Dr. Rajesh Verma (Admin & CMO)', 'admin@vitalred.org', '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98100 12345', 'admin', 'active'),
-(2, 'Priya Nair (Blood Bank Officer)', 'staff.priya@vitalred.org', '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98111 23456', 'admin', 'active'),
+-- Admin / Medical Staff (admin123 / staff123)
+(1, 'Dr. Rajesh Verma (Admin & CMO)', 'admin@vitalred.org', '$2y$10$YSHpCYyPxsalN9kY5AQbYuQnWiryUI6i/0kAL/uHfWMXfPERh5C.2', '+91 98100 12345', 'admin', 'active'),
+(2, 'Priya Nair (Blood Bank Officer)', 'staff.priya@vitalred.org', '$2y$10$qsNgPTXKlTN0bh85sBN42.3DI.wdiNSa6BUlyjHROf3slFCJbeFQ6', '+91 98111 23456', 'admin', 'active'),
 
--- 15 Donors
-(3,  'Rahul Sharma',        'rahul.sharma@gmail.com',    '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98765 43210', 'donor', 'active'),
-(4,  'Ananya Verma',        'ananya.verma@outlook.com',  '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98222 34567', 'donor', 'active'),
-(5,  'Vikram Singh',        'vikram.singh@gmail.com',    '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98333 45678', 'donor', 'active'),
-(6,  'Sneha Patel',         'sneha.patel@gmail.com',     '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98444 56789', 'donor', 'active'),
-(7,  'Amit Kumar',          'amit.kumar@yahoo.com',      '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98555 67890', 'donor', 'active'),
-(8,  'Pooja Iyer',          'pooja.iyer@gmail.com',      '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98666 78901', 'donor', 'active'),
-(9,  'Karan Mehra',         'karan.mehra@gmail.com',     '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98777 89012', 'donor', 'active'),
-(10, 'Ritu Chopra',         'ritu.chopra@gmail.com',     '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98888 90123', 'donor', 'active'),
-(11, 'Alok Kumar Jha',      'alok.jha@gmail.com',        '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98999 01234', 'donor', 'active'),
-(12, 'Neha Kumari',         'neha.kumari@gmail.com',     '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98111 12345', 'donor', 'active'),
-(13, 'Deepak Kumar Yadav',  'deepak.yadav@gmail.com',    '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98222 23456', 'donor', 'active'),
-(14, 'Suman Saurav',        'suman.saurav@gmail.com',    '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98333 34567', 'donor', 'active'),
-(15, 'Priyanka Roy',        'priyanka.roy@gmail.com',    '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98444 45678', 'donor', 'active'),
-(16, 'Md. Tarique Anwar',   'tarique.anwar@gmail.com',   '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98555 56789', 'donor', 'active'),
-(17, 'Rajesh Ranjan',       'rajesh.ranjan@gmail.com',   '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98666 67890', 'donor', 'active'),
+-- 15 Donors (donor123)
+(3,  'Rahul Sharma',        'rahul.sharma@gmail.com',    '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98765 43210', 'donor', 'active'),
+(4,  'Ananya Verma',        'ananya.verma@outlook.com',  '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98222 34567', 'donor', 'active'),
+(5,  'Vikram Singh',        'vikram.singh@gmail.com',    '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98333 45678', 'donor', 'active'),
+(6,  'Sneha Patel',         'sneha.patel@gmail.com',     '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98444 56789', 'donor', 'active'),
+(7,  'Amit Kumar',          'amit.kumar@yahoo.com',      '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98555 67890', 'donor', 'active'),
+(8,  'Pooja Iyer',          'pooja.iyer@gmail.com',      '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98666 78901', 'donor', 'active'),
+(9,  'Karan Mehra',         'karan.mehra@gmail.com',     '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98777 89012', 'donor', 'active'),
+(10, 'Ritu Chopra',         'ritu.chopra@gmail.com',     '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98888 90123', 'donor', 'active'),
+(11, 'Alok Kumar Jha',      'alok.jha@gmail.com',        '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98999 01234', 'donor', 'active'),
+(12, 'Neha Kumari',         'neha.kumari@gmail.com',     '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98111 12345', 'donor', 'active'),
+(13, 'Deepak Kumar Yadav',  'deepak.yadav@gmail.com',    '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98222 23456', 'donor', 'active'),
+(14, 'Suman Saurav',        'suman.saurav@gmail.com',    '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98333 34567', 'donor', 'active'),
+(15, 'Priyanka Roy',        'priyanka.roy@gmail.com',    '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98444 45678', 'donor', 'active'),
+(16, 'Md. Tarique Anwar',   'tarique.anwar@gmail.com',   '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98555 56789', 'donor', 'active'),
+(17, 'Rajesh Ranjan',       'rajesh.ranjan@gmail.com',   '$2y$10$Eb6h5jCOUWqIYcxvGPbWdekr7FuEbPjAGqXg3WOJ.v917IkHKM9Fy', '+91 98666 67890', 'donor', 'active'),
 
--- 5 Requesters (Hospital Desks & Requisitions)
-(18, 'LBKMCH Saharsa Blood Desk',          'lbkmch.req@vitalred.org',     '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98777 78901', 'requester', 'active'),
-(19, 'Sadar Hospital Saharsa Emergency',   'saharsa.sadar@vitalred.org',  '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98888 89012', 'requester', 'active'),
-(20, 'JNKTMCH Madhepura Trauma Unit',      'jnktmch.req@vitalred.org',    '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98999 90123', 'requester', 'active'),
-(21, 'Sadar Hospital Supaul Blood Center', 'supaul.sadar@vitalred.org',   '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98111 01234', 'requester', 'active'),
-(22, 'SDH Simri Bakhtiyarpur Desk',        'simri.sdh@vitalred.org',      '$2y$10$J3sLw0r0rYlU22q0J6zKcehE0uK8m4P6eR5yZ9wL0oP1mQ2nN4rGy', '+91 98222 12345', 'requester', 'active');
+-- 5 Requesters (Hospital Desks & Requisitions) (req123)
+(18, 'LBKMCH Saharsa Blood Desk',          'lbkmch.req@vitalred.org',     '$2y$10$Qqv54QsFu4jTtvHsV.NUM.bcqYP7cNCmmZiTKlWg.4RENV1BaxmeC', '+91 98777 78901', 'requester', 'active'),
+(19, 'Sadar Hospital Saharsa Emergency',   'saharsa.sadar@vitalred.org',  '$2y$10$Qqv54QsFu4jTtvHsV.NUM.bcqYP7cNCmmZiTKlWg.4RENV1BaxmeC', '+91 98888 89012', 'requester', 'active'),
+(20, 'JNKTMCH Madhepura Trauma Unit',      'jnktmch.req@vitalred.org',    '$2y$10$Qqv54QsFu4jTtvHsV.NUM.bcqYP7cNCmmZiTKlWg.4RENV1BaxmeC', '+91 98999 90123', 'requester', 'active'),
+(21, 'Sadar Hospital Supaul Blood Center', 'supaul.sadar@vitalred.org',   '$2y$10$Qqv54QsFu4jTtvHsV.NUM.bcqYP7cNCmmZiTKlWg.4RENV1BaxmeC', '+91 98111 01234', 'requester', 'active'),
+(22, 'SDH Simri Bakhtiyarpur Desk',        'simri.sdh@vitalred.org',      '$2y$10$Qqv54QsFu4jTtvHsV.NUM.bcqYP7cNCmmZiTKlWg.4RENV1BaxmeC', '+91 98222 12345', 'requester', 'active');
 
 -- ----------------------------------------------------------------------------
 -- 3. 10 Hospitals (Covering All Major Hospitals in Kosi Division: Saharsa, Madhepura, Supaul)

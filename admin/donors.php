@@ -9,8 +9,12 @@ require_once __DIR__ . '/../includes/auth_helper.php';
 require_auth(['admin']);
 
 $error = '';
-$blood_groups = $pdo->query("SELECT * FROM blood_groups ORDER BY group_name ASC")->fetchAll();
-$cities = $pdo->query("SELECT DISTINCT city FROM donors WHERE city IS NOT NULL AND city != '' ORDER BY city ASC")->fetchAll(PDO::FETCH_COLUMN);
+$blood_groups = get_all_blood_groups($pdo);
+try {
+    $cities = $pdo->query("SELECT DISTINCT city FROM donors WHERE city IS NOT NULL AND city != '' ORDER BY city ASC")->fetchAll(PDO::FETCH_COLUMN);
+} catch (Exception $e) {
+    $cities = [];
+}
 
 // Handle Add Donor Form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

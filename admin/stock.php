@@ -9,6 +9,7 @@ require_auth(['admin']);
 
 $error = '';
 $success = '';
+$blood_groups = get_all_blood_groups($pdo);
 
 // Handle Form Submissions (Add new unit or update status)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

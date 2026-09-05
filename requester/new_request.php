@@ -16,8 +16,11 @@ $stmt = $pdo->prepare("SELECT r.*, h.name AS hospital_name
 $stmt->execute([$user_id]);
 $recipient = $stmt->fetch();
 
-$blood_groups = $pdo->query("SELECT * FROM blood_groups ORDER BY group_name ASC")->fetchAll();
-$hospitals = $pdo->query("SELECT * FROM hospitals WHERE is_active = 1 ORDER BY name ASC")->fetchAll();
+$blood_groups = get_all_blood_groups($pdo);
+$hospitals = [];
+try {
+    $hospitals = $pdo->query("SELECT * FROM hospitals WHERE is_active = 1 ORDER BY name ASC")->fetchAll();
+} catch (Exception $e) {}
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

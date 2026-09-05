@@ -79,3 +79,43 @@ try {
     </div>");
 }
 
+/**
+ * Robust helper to fetch blood groups with auto self-healing
+ */
+function get_all_blood_groups($pdo_conn = null) {
+    global $pdo;
+    $conn = $pdo_conn ?: $pdo;
+    
+    $default_groups = [
+        ['blood_group_id' => 1, 'group_name' => 'A+',  'rh_factor' => 'Positive', 'critical_threshold' => 6],
+        ['blood_group_id' => 2, 'group_name' => 'A-',  'rh_factor' => 'Negative', 'critical_threshold' => 3],
+        ['blood_group_id' => 3, 'group_name' => 'B+',  'rh_factor' => 'Positive', 'critical_threshold' => 6],
+        ['blood_group_id' => 4, 'group_name' => 'B-',  'rh_factor' => 'Negative', 'critical_threshold' => 3],
+        ['blood_group_id' => 5, 'group_name' => 'AB+', 'rh_factor' => 'Positive', 'critical_threshold' => 4],
+        ['blood_group_id' => 6, 'group_name' => 'AB-', 'rh_factor' => 'Negative', 'critical_threshold' => 2],
+        ['blood_group_id' => 7, 'group_name' => 'O+',  'rh_factor' => 'Positive', 'critical_threshold' => 8],
+        ['blood_group_id' => 8, 'group_name' => 'O-',  'rh_factor' => 'Negative', 'critical_threshold' => 4],
+    ];
+
+    if (!$conn) {
+        return $default_groups;
+    }
+
+    try {
+        $groups = $conn->query("SELECT * FROM blood_groups ORDER BY blood_group_id ASC")->fetchAll();
+        if (!empty($groups)) {
+            return $groups;
+        }
+
+        // Auto self-heal: populate if table is empty
+        foreach ($default_groups as $g) {
+            $conn->prepare("INSERT IGNORE INTO blood_groups (blood_group_id, group_name, rh_factor, critical_threshold, description) VALUES (?, ?, ?, ?, ?)")
+                 ->execute([$g['blood_group_id'], $g['group_name'], $g['rh_factor'], $g['critical_threshold'], 'Standard ABO Blood Group']);
+        }
+        return $default_groups;
+    } catch (Exception $e) {
+        return $default_groups;
+    }
+}
+
+

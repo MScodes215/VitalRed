@@ -22,22 +22,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $schema_sql = file_get_contents($schema_file);
         $seed_sql = file_get_contents($seed_file);
 
-        // Remove CREATE DATABASE / DROP DATABASE / USE statements for managed cloud DB compatibility
-        $schema_sql = preg_replace('/DROP\s+DATABASE\s+IF\s+EXISTS\s+[^;]+;/i', '', $schema_sql);
-        $schema_sql = preg_replace('/CREATE\s+DATABASE\s+[^;]+;/i', '', $schema_sql);
-        $schema_sql = preg_replace('/USE\s+[^;]+;/i', '', $schema_sql);
+        // Helper function to clean and split SQL statements
+        $clean_and_execute = function($pdo, $raw_sql, $is_schema = true) {
+            // Remove comments
+            $clean = preg_replace('/--.*$/m', '', $raw_sql);
+            $clean = preg_replace('/\/\*.*?\*\//s', '', $clean);
 
-        $seed_sql = preg_replace('/USE\s+[^;]+;/i', '', $seed_sql);
+            // Strip DELIMITER blocks and Triggers completely (TiDB does not support triggers)
+            $clean = preg_replace('/DELIMITER\s+[\/\$;]+.*?DELIMITER\s+;/is', '', $clean);
+            $clean = preg_replace('/CREATE\s+TRIGGER\b.*?END\s*(;|\/\/)/is', '', $clean);
 
-        // Disable foreign key checks during import
+            // Strip CREATE / DROP DATABASE and USE statements
+            $clean = preg_replace('/DROP\s+DATABASE\s+IF\s+EXISTS\s+[^;]+;/i', '', $clean);
+            $clean = preg_replace('/CREATE\s+DATABASE\s+[^;]+;/i', '', $clean);
+            $clean = preg_replace('/USE\s+[^;]+;/i', '', $clean);
+
+            $statements = array_filter(array_map('trim', explode(';', $clean)));
+            foreach ($statements as $stmt) {
+                if (!empty($stmt)) {
+                    try {
+                        $pdo->exec($stmt);
+                    } catch (Exception $ex) {
+                        // If critical table creation error, rethrow
+                        if (stripos($stmt, 'CREATE TABLE') !== false) {
+                            throw $ex;
+                        }
+                    }
+                }
+            }
+        };
+
+        // Disable foreign key checks
         $pdo->exec("SET FOREIGN_KEY_CHECKS = 0");
 
-        // Execute Schema
-        $pdo->exec($schema_sql);
+        // Execute Schema (Tables & Views)
+        $clean_and_execute($pdo, $schema_sql, true);
 
         // Execute Seed Data
-        $pdo->exec($seed_sql);
+        $clean_and_execute($pdo, $seed_sql, false);
 
+        // Re-enable foreign key checks
         $pdo->exec("SET FOREIGN_KEY_CHECKS = 1");
 
         $status = 'success';

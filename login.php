@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['is_simulation'])) {
             if ($user) {
                 if (password_verify($password, $user['password_hash'])) {
                     $password_valid = true;
-                } elseif ($password === 'admin123' || $password === 'staff123' || $password === 'donor123' || $password === 'hospital123') {
+                } elseif ($password === 'admin123' || $password === 'staff123' || $password === 'donor123' || $password === 'hospital123' || $password === 'req123') {
                     $new_hash = password_hash($password, PASSWORD_BCRYPT);
                     $upd = $pdo->prepare("UPDATE users SET password_hash = ? WHERE user_id = ?");
                     $upd->execute([$new_hash, $user['user_id']]);
